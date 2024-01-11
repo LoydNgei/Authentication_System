@@ -8,9 +8,7 @@ $DBNAME = 'Signupforms';
  
 $conn = mysqli_connect($DBHOST, $DBUSER, $DBPASSWORD, $DBNAME);
 
-if ($conn) {
-    echo "Database connected successfully";
-} else {
+if (!$conn) {
     die(mysqli_error($conn));
 }
 
