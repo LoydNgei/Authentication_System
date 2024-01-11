@@ -1,4 +1,7 @@
 <?php
+$login = 0;
+$invalid = 0;
+
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connect.php';
@@ -14,9 +17,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($result) {
         $num = mysqli_num_rows($result);
         if($num > 0) {
-            echo "Login successful";
+            $login=1;
+            session_start();
+            $_SESSION['username'] = $username;
+            header('location:home.php');
         } else {
-            echo "Invalid data";
+            $invalid=1;
         }
     }
 
@@ -34,10 +40,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   </head>
   <body>
 
+  <?php
 
+if($login) {
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success </strong>You are successfully Logged in<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+?>
 
+<?php
 
-
+if($invalid) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error </strong>Invalid credentials<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>';
+}
+?>
 
 
     <h1 class="text-center mt-3">Login to our website</h1>
